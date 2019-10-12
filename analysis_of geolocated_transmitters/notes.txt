@@ -1,0 +1,22 @@
+- What are the typical distances between transmitters?
+- Are there patterns in which transmitters are close together and which are further apart? - Is there any pattern in where transmitters are located?
+- Is the “Bandwidth (MHz)” correlated with any of the other attributes?
+
+eNB ID                    - network type + cell identifier
+Operator                  - Verizon
+Center Frequency (MHz)    - measure of a central frequency between the upper and lower cutoff frequencies
+Start Frequency (MHz)     -
+End Frequency (MHz)
+Sector ID
+Latitude
+Longitude
+Antennas                  - number of antennas
+EARFCN                    - is a code that specifies a pair of physical radio carriers used for transmission and reception in a land mobile radio system, one for the uplink signal and one for the downlink signal
+MCC                       - mobile county code
+MNC                       - mobile network codes
+Bandwidth (MHz)
+Standard                  - LTE
+TAC                       - 9216
+Collection Date           - 9-2018
+Band                      - AWS(advanced wireless services)-1, 700, PCS, AWS-3, 800..
+PCI                       - 

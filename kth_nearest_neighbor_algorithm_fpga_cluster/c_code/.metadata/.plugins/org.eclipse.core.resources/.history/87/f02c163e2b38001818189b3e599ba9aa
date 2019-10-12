@@ -1,0 +1,44 @@
+#include "dma.h"
+#include "ethernet.h"
+#include "knn.h"
+
+int main(void){
+	xil_printf("\r\n--- Entering main() --- \r\n");
+
+	/*user set initializations*/
+	int k = 10;
+	int num_train = 507;
+	int dim = 10000;
+	ETH_PACKET_SIZE = 320; //in ints
+	printf("\nUser defined variables:\n");
+	printf("K: %i\n",k);
+	printf("Number of train vectors: %i\n",num_train);
+	printf("Dimensions per vector: %i\n",dim);
+	printf("Ethernet packet size(in integers): %i\n",ETH_PACKET_SIZE);
+
+	/*Variables needed for program*/
+	ETH_PKT_SIZE_BYTES = ETH_PACKET_SIZE*4;
+	int * kth_nearest = (int *)malloc(sizeof(int)*k);
+	NUM_ETH_PACKETS = (dim/ETH_PACKET_SIZE+1)*num_train;
+	ETH_PACKETS_RECEIVED=0;
+	VECTORS_INDEX=0;
+	PACKETS_INDEX=0;
+	VECTORS=malloc(sizeof(char*)*(num_train+1));
+	int i;
+	for(i=0;i<num_train+1;i++) VECTORS[i]=malloc(NUM_ETH_PACKETS*ETH_PKT_SIZE_BYTES);
+
+	/*set ip address and ip address that it can accept*/
+	ethernet_config();
+	/*wait to accept*/
+	ethernet_accept();
+	/*compute kth_nearest*/
+	knn_alg(kth_nearest, num_train, dim, k);
+	free(VECTORS);
+	/*print the kth_nearest distances*/
+	printf("\n--- This boards results: ---\n");
+	for(i=0; i<k; i++) printf("k=%i nearest: %i\n",i, kth_nearest[i]);
+	/*send data back to the PC*/
+	//ethernet_send(kth_nearest, k);
+	xil_printf("\n--- Exiting main() --- \r\n");
+	return 0;
+}

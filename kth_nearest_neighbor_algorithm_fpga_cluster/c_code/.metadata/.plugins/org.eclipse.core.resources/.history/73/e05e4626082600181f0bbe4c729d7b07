@@ -1,0 +1,48 @@
+#include "dma.h"
+#include "ethernet.h"
+
+int main(void)
+{
+	xil_printf("\r\n--- Entering main() --- \r\n");
+
+	/*initializations*/
+	NUM_ETH_PACKETS = 15625;
+    ETH_PACKET_SIZE = 320; //in ints
+    int num_ints=NUM_ETH_PACKETS*ETH_PACKET_SIZE;
+    int dma_packet_size = 250000; //in ints, max 2^15.
+    int num_dma_packets=num_ints/dma_packet_size;
+    EDATA_INDEX=0;
+	EDATA= malloc(sizeof(int)*num_ints);
+
+	/*set ip address and ip address that it can accept*/
+	ethernet_config();
+	/*wait to accept*/
+	ethernet_accept();
+	/*wait until all ethernet packets are received*/
+	ethernet_receive();
+	xil_printf("\nEDATA[4999998]: %i\n", EDATA[4999998]);
+	xil_printf("EDATA[4999999]: %i\n", EDATA[4999999]);
+	/*init dma between DRAM and FPGA*/
+	init_dma2();
+	/*init FPGA Stream Slave*/
+	RESET = 1;
+	RESET = 0;
+
+	/*send packets through dma*/
+	u8 *packet = (u8*)EDATA;
+	int num_bytes = sizeof(int)*dma_packet_size;
+	for (int i = 0; i < num_dma_packets; ++i)
+	{
+		init_dma2();
+		SendPacket((packet + i*num_bytes), num_bytes);
+	}
+	//while(DONE != 0); not working
+	for(int j=0; j<100000; j++); //delay because done isn't working
+	// print last 2 integers
+	xil_printf("dma_reg1 = %i\n", INT1);
+	xil_printf("dma_reg2 = %i\n", INT2);
+	//ethernet_send();
+	//free(EDATA);
+	xil_printf("/n--- Exiting main() --- \r\n");
+	return 0;
+}

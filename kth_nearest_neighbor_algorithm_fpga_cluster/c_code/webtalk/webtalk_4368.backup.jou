@@ -1,0 +1,12 @@
+#-----------------------------------------------------------
+# Webtalk v2017.2 (64-bit)
+# SW Build 1909853 on Thu Jun 15 18:39:09 MDT 2017
+# 
+# Start of session at: Sat Apr 14 22:55:25 2018
+# Process ID: 4368
+# Current directory: C:/knn_fpga/Knn_Zybo_Cluster_Vivado_2017.2/Knn_Zybo_Cluster_Vivado_2017.2.sdk/webtalk
+# Command line: wbtcv.exe -mode batch -source sdk_webtalk.tcl
+# Log file: C:/knn_fpga/Knn_Zybo_Cluster_Vivado_2017.2/Knn_Zybo_Cluster_Vivado_2017.2.sdk/webtalk/webtalk.log
+# Journal file: C:/knn_fpga/Knn_Zybo_Cluster_Vivado_2017.2/Knn_Zybo_Cluster_Vivado_2017.2.sdk/webtalk\webtalk.jou
+#-----------------------------------------------------------
+source sdk_webtalk.tcl

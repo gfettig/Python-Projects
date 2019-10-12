@@ -1,0 +1,1 @@
+This code converts a square pixelated image to c code that can be ran on Aurduinos and Teensy micro-controllers.

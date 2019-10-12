@@ -1,0 +1,15 @@
+11:35:58 **** Build of configuration Debug for project ZYBO_DMA_ETH_CONTROLLER ****
+make pre-build main-build 
+a9-linaro-pre-build-step
+' '
+'Building file: ../src/IRQ.c'
+'Invoking: ARM v7 gcc compiler'
+arm-none-eabi-gcc -Wall -O0 -g3 -c -fmessage-length=0 -MT"src/IRQ.o" -mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -I../../ZYBO_DMA_ETH_CONTROLLER_bsp/ps7_cortexa9_0/include -MMD -MP -MF"src/IRQ.d" -MT"src/IRQ.o" -o "src/IRQ.o" "../src/IRQ.c"
+../src/IRQ.c:3:25: fatal error: xparameters.h: No such file or directory
+ #include "xparameters.h"
+                         ^
+compilation terminated.
+make: *** [src/IRQ.o] Error 1
+
+11:35:58 Build Finished (took 545ms)
+

@@ -1,0 +1,27 @@
+/*
+ * dma.h
+ *
+ *  Created on: Oct 25, 2017
+ *      Author: mcowley
+ */
+
+#ifndef SRC_DMA_H_
+#define SRC_DMA_H_
+
+#include "xaxidma.h"
+#include "xparameters.h"
+#include "xdebug.h"
+
+
+/************************** Function Prototypes ******************************/
+#if defined(XPAR_UARTNS550_0_BASEADDR)
+static void Uart550_Setup(void);
+#endif
+
+int RxSetup(XAxiDma * AxiDmaInstPtr);
+int TxSetup(XAxiDma * AxiDmaInstPtr);
+int SendPacket(u8 *TxPacket, int length);
+int CheckData(void);
+u8* getPacket();
+
+#endif /* SRC_DMA_H_ */

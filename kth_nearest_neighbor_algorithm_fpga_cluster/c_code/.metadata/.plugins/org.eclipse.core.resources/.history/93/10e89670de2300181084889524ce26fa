@@ -1,0 +1,67 @@
+
+#include "xparameters.h"
+#include "dma.h"
+#include "stdlib.h"
+#include "xtime_l.h"
+
+#define BASE (int*)0x43C00000
+#define INT1 *(BASE)
+#define INT2 *(BASE + 1)
+#define DONE *(BASE + 4)
+#define RESET *(BASE + 16)
+#define PACKET_SIZE_REG *(BASE + 17)
+#define NUM_WORDS *(BASE + 18)
+
+#define NUM_INTS 5000000
+#define PACKET_SIZE 250000 // num ints in each package
+
+const u32 num_packets = NUM_INTS / PACKET_SIZE;
+
+
+// functions
+void dma_test();
+void init_progam();
+
+u32 interrupt_count = 0;
+
+int main(void)
+{
+	xil_printf("\r\n--- Entering main() --- \r\n");
+	init_dma();
+	// initialize variables
+	RESET = 1;
+	NUM_WORDS = NUM_INTS;
+	PACKET_SIZE_REG = PACKET_SIZE;
+	u32 *array = (u32*)malloc(sizeof(u32)*NUM_INTS);
+	RESET = 0;
+
+	// initialize array of integers
+	xil_printf("before reset\n");
+	for (int i = 0; i < NUM_INTS; ++i)
+	{
+		array[i] = i+1;
+	}
+	xil_printf("after\n");
+
+	// send packets of integers
+	u8 *packet = (u8*)array;
+	int num_bytes = sizeof(int)*PACKET_SIZE;
+	for (int i = 0; i < num_packets; ++i)
+	{
+		init_dma();
+		xil_printf("--- Sending packet %d--- \r\n", i);
+		SendPacket((packet + i*num_bytes), num_bytes);
+		for(int j=0; j<100000; j++); //delay because done isn't working
+		//while(DONE != 0); not working
+		// print sum of integers
+		xil_printf("INT1 = %i\n", INT1);
+		xil_printf("INT2 = %i\n", INT2);
+	}
+
+		//
+		free(array);
+		xil_printf("--- Exiting main() --- \r\n");
+
+
+	return 0;
+}

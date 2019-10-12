@@ -1,0 +1,70 @@
+16:00:42 **** Auto Build of configuration Debug for project echo ****
+make pre-build main-build 
+a9-linaro-pre-build-step
+' '
+'Building file: ../src/echo.c'
+'Invoking: ARM v7 gcc compiler'
+arm-none-eabi-gcc -Wall -O0 -g3 -c -fmessage-length=0 -MT"src/echo.o" -mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -I../../echo_bsp/ps7_cortexa9_0/include -MMD -MP -MF"src/echo.d" -MT"src/echo.o" -o "src/echo.o" "../src/echo.c"
+../src/echo.c:52:39: warning: 'struct pbuf' declared inside parameter list will not be visible outside of this definition or declaration
+                                struct pbuf *p, err_t err)
+                                       ^~~~
+../src/echo.c:51:39: warning: 'struct tcp_pcb' declared inside parameter list will not be visible outside of this definition or declaration
+ err_t recv_callback(void *arg, struct tcp_pcb *tpcb,
+                                       ^~~~~~~
+../src/echo.c: In function 'recv_callback':
+../src/echo.c:56:3: warning: implicit declaration of function 'tcp_close' [-Wimplicit-function-declaration]
+   tcp_close(tpcb);
+   ^~~~~~~~~
+../src/echo.c:57:3: warning: implicit declaration of function 'tcp_recv' [-Wimplicit-function-declaration]
+   tcp_recv(tpcb, NULL);
+   ^~~~~~~~
+../src/echo.c:62:2: warning: implicit declaration of function 'tcp_recved' [-Wimplicit-function-declaration]
+  tcp_recved(tpcb, p->len);
+  ^~~~~~~~~~
+../src/echo.c:62:20: error: dereferencing pointer to incomplete type 'struct pbuf'
+  tcp_recved(tpcb, p->len);
+                    ^~
+../src/echo.c:66:6: warning: implicit declaration of function 'tcp_sndbuf' [-Wimplicit-function-declaration]
+  if (tcp_sndbuf(tpcb) > p->len) {
+      ^~~~~~~~~~
+../src/echo.c:67:9: warning: implicit declaration of function 'tcp_write' [-Wimplicit-function-declaration]
+   err = tcp_write(tpcb, p->payload, p->len, 1);
+         ^~~~~~~~~
+../src/echo.c:72:2: warning: implicit declaration of function 'pbuf_free' [-Wimplicit-function-declaration]
+  pbuf_free(p);
+  ^~~~~~~~~
+../src/echo.c: At top level:
+../src/echo.c:77:41: warning: 'struct tcp_pcb' declared inside parameter list will not be visible outside of this definition or declaration
+ err_t accept_callback(void *arg, struct tcp_pcb *newpcb, err_t err)
+                                         ^~~~~~~
+../src/echo.c: In function 'accept_callback':
+../src/echo.c:86:2: warning: implicit declaration of function 'tcp_arg' [-Wimplicit-function-declaration]
+  tcp_arg(newpcb, (void*)(UINTPTR)connection);
+  ^~~~~~~
+../src/echo.c: In function 'start_application':
+../src/echo.c:102:8: warning: implicit declaration of function 'tcp_new' [-Wimplicit-function-declaration]
+  pcb = tcp_new();
+        ^~~~~~~
+../src/echo.c:102:6: warning: assignment makes pointer from integer without a cast [-Wint-conversion]
+  pcb = tcp_new();
+      ^
+../src/echo.c:109:8: warning: implicit declaration of function 'tcp_bind' [-Wimplicit-function-declaration]
+  err = tcp_bind(pcb, IP_ADDR_ANY, port);
+        ^~~~~~~~
+../src/echo.c:109:22: error: 'IP_ADDR_ANY' undeclared (first use in this function)
+  err = tcp_bind(pcb, IP_ADDR_ANY, port);
+                      ^~~~~~~~~~~
+../src/echo.c:109:22: note: each undeclared identifier is reported only once for each function it appears in
+../src/echo.c:119:8: warning: implicit declaration of function 'tcp_listen' [-Wimplicit-function-declaration]
+  pcb = tcp_listen(pcb);
+        ^~~~~~~~~~
+../src/echo.c:119:6: warning: assignment makes pointer from integer without a cast [-Wint-conversion]
+  pcb = tcp_listen(pcb);
+      ^
+../src/echo.c:126:2: warning: implicit declaration of function 'tcp_accept' [-Wimplicit-function-declaration]
+  tcp_accept(pcb, accept_callback);
+  ^~~~~~~~~~
+make: *** [src/echo.o] Error 1
+
+16:00:43 Build Finished (took 543ms)
+
